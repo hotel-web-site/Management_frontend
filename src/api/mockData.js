@@ -17,11 +17,7 @@ export const mockHotels = [
     roomCount: 120,
     averagePrice: 160000,
     status: "active",
-<<<<<<< HEAD
     approvalStatus: "pending",
-=======
-    approvalStatus: "approved",
->>>>>>> upstream/main
     createdAt: "2024-01-05",
   },
   {
@@ -47,11 +43,7 @@ export const mockHotels = [
     roomCount: 150,
     averagePrice: 180000,
     status: "active",
-<<<<<<< HEAD
     approvalStatus: "pending",
-=======
-    approvalStatus: "approved",
->>>>>>> upstream/main
     createdAt: "2024-03-18",
   },
   {
@@ -217,13 +209,8 @@ export const mockReviews = [
     guestName: "김철수",
     guestEmail: "kim@example.com",
     rating: 4.5,
-<<<<<<< HEAD
     reportCount: 1,
     reportStatus: "reported",
-=======
-    reportCount: 0,
-    reportStatus: "clean",
->>>>>>> upstream/main
     status: "published",
     createdAt: "2024-05-12",
   },
@@ -248,13 +235,8 @@ export const mockReviews = [
     guestName: "박민수",
     guestEmail: "park@example.com",
     rating: 5,
-<<<<<<< HEAD
     reportCount: 3,
     reportStatus: "reported",
-=======
-    reportCount: 0,
-    reportStatus: "clean",
->>>>>>> upstream/main
     status: "published",
     createdAt: "2024-05-25",
   },
@@ -267,11 +249,7 @@ export const mockReviews = [
     guestEmail: "jung@example.com",
     rating: 2.5,
     reportCount: 1,
-<<<<<<< HEAD
     reportStatus: "reported",
-=======
-    reportStatus: "resolved",
->>>>>>> upstream/main
     status: "hidden",
     createdAt: "2024-06-01",
   },

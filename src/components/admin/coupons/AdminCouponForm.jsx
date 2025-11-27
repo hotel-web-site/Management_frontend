@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useState, useEffect, useRef } from "react";
-=======
-import { useState, useEffect } from "react";
->>>>>>> upstream/main
 
 const DEFAULT_FORM = {
   name: "",
@@ -24,7 +20,6 @@ const STATUS_OPTIONS = [
   { value: "expired", label: "만료" },
 ];
 
-<<<<<<< HEAD
 const AdminCouponForm = ({ coupon = null, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({ ...DEFAULT_FORM, ...(coupon || {}) });
   const firstInputRef = useRef(null);
@@ -36,15 +31,6 @@ const AdminCouponForm = ({ coupon = null, onSubmit, onCancel }) => {
 
   // removed auto-focus effect to avoid possible render loops in strict/dev mode
 
-=======
-const AdminCouponForm = ({ coupon = {}, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState({ ...DEFAULT_FORM, ...coupon });
-
-  useEffect(() => {
-    setFormData({ ...DEFAULT_FORM, ...coupon });
-  }, [coupon]);
-
->>>>>>> upstream/main
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -66,11 +52,7 @@ const AdminCouponForm = ({ coupon = {}, onSubmit, onCancel }) => {
   };
 
   const handleReset = () => {
-<<<<<<< HEAD
     setFormData({ ...DEFAULT_FORM });
-=======
-    setFormData({ ...DEFAULT_FORM, ...coupon });
->>>>>>> upstream/main
   };
 
   return (
@@ -81,10 +63,7 @@ const AdminCouponForm = ({ coupon = {}, onSubmit, onCancel }) => {
         <input
           id="couponName"
           name="name"
-<<<<<<< HEAD
           ref={firstInputRef}
-=======
->>>>>>> upstream/main
           value={formData.name}
           onChange={handleChange}
           placeholder="쿠폰 이름을 입력하세요"
