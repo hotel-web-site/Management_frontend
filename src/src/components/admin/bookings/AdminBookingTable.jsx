@@ -9,15 +9,6 @@ const STATUS_OPTIONS = [
   { value: "cancelled", label: "취소" },
 ];
 
-<<<<<<< HEAD
-const paymentStatusMap = {
-  paid: "결제완료",
-  pending: "결제대기",
-  refunded: "환불완료",
-};
-
-=======
->>>>>>> upstream/main
 const formatDate = (value) => {
   if (!value) return "-";
   const date = new Date(value);
@@ -112,23 +103,14 @@ const AdminBookingTable = ({ bookings = [], onStatusChange, onCancel }) => {
                 </div>
               </td>
               <td>
-<<<<<<< HEAD
-                {booking?.checkIn} ~ {booking?.checkOut}
-=======
                 {formatDate(booking?.checkIn)} ~ {formatDate(booking?.checkOut)}
->>>>>>> upstream/main
               </td>
               <td>{formatCurrency(booking?.totalAmount)}</td>
               <td>
                 <StatusBadge status={booking?.status} type="booking" />
               </td>
               <td>
-<<<<<<< HEAD
-                {paymentStatusMap[booking.paymentStatus] ||
-                  booking.paymentStatus}
-=======
                 <StatusBadge status={booking?.paymentStatus} type="booking" />
->>>>>>> upstream/main
               </td>
               <td>{renderActions(booking)}</td>
             </tr>
