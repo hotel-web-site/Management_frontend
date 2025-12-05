@@ -1,43 +1,42 @@
-import axiosClient from "./axiosClient";
-import { mockReviewApi } from "./mockApi";
+// src/api/adminReviewApi.js (최종본)
+import axiosInstance from "./axiosConfig"; // 니 axiosConfig 가져오기
+import { getReportsAdmin, processReport } from "./index"; // 신고 관련은 그대로
 
-const USE_MOCK = true;
-
-export const adminReviewApi = {
-  // 리뷰 목록 조회
-  getReviews: (params) => {
-    if (USE_MOCK) return mockReviewApi.getReviews(params);
-    return axiosClient.get("/admin/reviews", { params });
+const adminReviewApi = {
+  // 1. 리뷰 목록 조회 (이제 진짜 됨!)
+  getReviews: async (params) => {
+    // GET /api/reviews/admin/list
+    const response = await axiosInstance.get('/reviews/admin/list', { params });
+    return response.data;
   },
 
-  // 리뷰 상세 조회
-  getReviewById: (reviewId) => {
-    if (USE_MOCK) return mockReviewApi.getReviewById(reviewId);
-    return axiosClient.get(`/admin/reviews/${reviewId}`);
+  // 2. 리뷰 상세 조회
+  getReviewById: async (reviewId) => {
+    const response = await axiosInstance.get(`/reviews/admin/${reviewId}`);
+    return response.data;
   },
 
-  // 리뷰 삭제
-  deleteReview: (reviewId) => {
-    if (USE_MOCK) return mockReviewApi.deleteReview(reviewId);
-    return axiosClient.delete(`/admin/reviews/${reviewId}`);
+  // 3. 리뷰 삭제
+  deleteReview: async (reviewId) => {
+    const response = await axiosInstance.delete(`/reviews/admin/${reviewId}`);
+    return response.data;
   },
 
-  // 리뷰 상태 변경 (숨기기/노출)
-  updateReviewStatus: (reviewId, status) => {
-    if (USE_MOCK) return mockReviewApi.updateReviewStatus?.(reviewId, status) || Promise.resolve();
-    return axiosClient.put(`/admin/reviews/${reviewId}/status`, { status });
+  // 4. 리뷰 상태 변경 (껍데기지만 에러는 안 남)
+  updateReviewStatus: async (reviewId, status) => {
+    const response = await axiosInstance.put(`/reviews/admin/${reviewId}/status`, { status });
+    return response.data;
   },
 
-  // 신고된 리뷰 목록 조회
-  getReportedReviews: (params) => {
-    if (USE_MOCK) return mockReviewApi.getReportedReviews(params);
-    return axiosClient.get("/admin/reviews/reported", { params });
+  // --- 아래는 신고(Report) 관련 (그대로 유지) ---
+  getReportedReviews: async (params) => {
+    const response = await getReportsAdmin(params);
+    return response.data; 
   },
 
-  // 리뷰 신고 처리
-  handleReport: (reviewId, action) => {
-    if (USE_MOCK) return mockReviewApi.handleReport(reviewId, action);
-    return axiosClient.post(`/admin/reviews/${reviewId}/report`, { action });
+  handleReport: async (reportId, action) => {
+    const response = await processReport(reportId, { status: action }); // action: resolved/dismissed
+    return response.data;
   },
 };
 

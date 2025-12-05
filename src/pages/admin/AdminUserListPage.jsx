@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import AdminUserFilter from "../../components/admin/users/AdminUserFilter";
+// import AdminUserFilter from ... (필터는 일단 둠)
 import AdminUserTable from "../../components/admin/users/AdminUserTable";
 import Pagination from "../../components/common/Pagination";
-import { adminUserApi } from "../../api/adminUserApi";
+import adminUserApi from "../../api/adminUserApi"; // 🚨 중괄호 뺌
 import Loader from "../../components/common/Loader";
 import ErrorMessage from "../../components/common/ErrorMessage";
 
@@ -22,10 +22,10 @@ const AdminUserListPage = () => {
     try {
       setLoading(true);
       const data = await adminUserApi.getUsers({
-        ...filters,
-        search: filters.keyword,
+        // ...filters,
         page: currentPage,
       });
+      // 🚨 백엔드 응답 구조: { users: [...], total, ... }
       setUsers(data.users || []);
       setTotalPages(data.totalPages || 1);
     } catch (err) {
@@ -35,34 +35,20 @@ const AdminUserListPage = () => {
     }
   };
 
-  const handleFilterChange = (newFilters) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
-  };
+  const handleStatusChange = async (userId, currentStatus) => {
+    if (!window.confirm(`정말 ${currentStatus ? '차단' : '해제'} 하시겠습니까?`)) return;
 
-  const handleSearch = () => {
-    setCurrentPage(1);
-    fetchUsers();
-  };
-
-  const handleStatusChange = async (userId, status) => {
     try {
-      await adminUserApi.updateUserStatus(userId, status);
+      // 🚨 백엔드는 토글이라 status 값 안 보내도 됨 (userId만 보냄)
+      await adminUserApi.updateUserStatus(userId);
+      alert("상태가 변경되었습니다.");
       fetchUsers();
     } catch (err) {
       alert(err.message || "상태 변경에 실패했습니다.");
     }
   };
 
-  const handleDelete = async (userId) => {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
-
-    try {
-      await adminUserApi.deleteUser(userId);
-      fetchUsers();
-    } catch (err) {
-      alert(err.message || "삭제에 실패했습니다.");
-    }
-  };
+  // handleDelete 삭제 (기능 없음)
 
   if (loading) return <Loader fullScreen />;
   if (error) return <ErrorMessage message={error} onRetry={fetchUsers} />;
@@ -70,19 +56,16 @@ const AdminUserListPage = () => {
   return (
     <div className="admin-user-list-page">
       <div className="page-header">
-        <h1>회원 관리</h1>
+        <h1>회원 관리 (관리자)</h1>
       </div>
 
-      <AdminUserFilter
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        onSearch={handleSearch}
-      />
+      {/* 필터는 필요하면 연결 */}
+      {/* <AdminUserFilter ... /> */}
 
       <AdminUserTable
         users={users}
         onStatusChange={handleStatusChange}
-        onDelete={handleDelete}
+      // onDelete={handleDelete} // 삭제
       />
 
       <Pagination
