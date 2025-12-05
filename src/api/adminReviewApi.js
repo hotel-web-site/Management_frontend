@@ -28,6 +28,10 @@ const adminReviewApi = {
     return response.data;
   },
 
+  // ==================================================
+  // ✅ [핵심] 신고된 리뷰 관리
+  // ==================================================
+
   // --- 아래는 신고(Report) 관련 (그대로 유지) ---
   getReportedReviews: async (params) => {
     const response = await getReportsAdmin(params);
