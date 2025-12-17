@@ -17,6 +17,7 @@ import AdminCouponCreatePage from "../pages/admin/AdminCouponCreatePage";
 import AdminCouponEditPage from "../pages/admin/AdminCouponEditPage";
 import AdminSettingsPage from "../pages/admin/AdminSettingsPage";
 import AdminMyProfilePage from "../pages/admin/AdminMyProfilePage";
+import AdminAuditLogPage from "../pages/admin/audit/AdminAuditLogPage";
 
 const adminRoutes = [
   {
@@ -87,6 +88,19 @@ const adminRoutes = [
         path: "coupons/:couponId/edit",
         element: <AdminCouponEditPage />,
       },
+      {
+        path: "settings",
+        element: <AdminSettingsPage />,
+      },
+      {
+        path: "me",
+        element: <AdminMyProfilePage />,
+      },
+      {
+        path: "audit-logs",
+        element: <AdminAuditLogPage />,
+      },
+
       {
         path: "settings",
         element: <AdminSettingsPage />,

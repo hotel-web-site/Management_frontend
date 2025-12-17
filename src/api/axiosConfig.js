@@ -3,7 +3,7 @@ import axios from "axios";
 // 🚨 [여기가 문제였음]
 // 니가 여기에 "VITE_API_BASE_URL=..." 이라는 글자를 넣었을 확률 10000%임.
 // 그냥 깔끔하게 주소만 딱 박아.
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+const BASE_URL = 'http://dfasdfasd.store/api';
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
