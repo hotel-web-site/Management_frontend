@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "../../hooks/useAdminAuth";
+import authApi from "../../api/adminAuthApi";
 
 const AdminLoginPage = () => {
   const navigate = useNavigate();
@@ -21,27 +22,25 @@ const AdminLoginPage = () => {
     e.preventDefault();
 
     try {
-      // 1. 로그인 요청 (백엔드로 아이디/비번 발사)
-      const response = await authApi.login({ email, password });
+      // 1. 로그인 요청
+      const response = await authApi.login(formData);
 
-      // 2. 받아온 데이터에서 'role' 확인 (백엔드가 user 정보 줄 거임)
-      // (보통 response.user 또는 response.data.user에 들어있음. 콘솔 찍어봐!)
-      const { user, token } = response;
+      // 2. 데이터 꺼내기 (여기는 .data 붙이는 거 잊지 말고!)
+      const { user, token } = response.data;
 
-      // 토큰 저장 (이건 원래 하던 거고)
+      // 3. 토큰 저장
       localStorage.setItem('accessToken', token);
+      localStorage.setItem('userRole', user.role); // 기왕이면 역할도 저장해두자
 
-      // 🚨 3. 여기가 핵심! (역할별 납치) 🚨
+      // 🚨 4. [수정] navigate 대신 이걸 써! (강제 새로고침 효과)
+      // 이렇게 하면 앱이 새로 시작되면서 토큰을 읽고 "로그인 됨" 상태로 변함
       if (user.role === 'admin') {
-        // 관리자면 -> 관리자 대시보드로
-        navigate('/admin/dashboard', { replace: true });
+        window.location.replace('/admin/dashboard');
       } else if (user.role === 'business') {
-        // 박사장(Business)이면 -> 오너 대시보드로 납치
-        navigate('/owner/dashboard', { replace: true }); // 👈 아까 만든 그 주소!
+        window.location.replace('/owner/dashboard');
       } else {
-        // 혹시 이상한 놈(일반 유저)이 여기로 로그인하면?
-        alert("관리자 또는 사업자만 접속 가능합니다.");
-        navigate('/'); // 메인으로 쫓아내
+        alert("접근 권한이 없습니다.");
+        window.location.replace('/');
       }
 
     } catch (err) {
