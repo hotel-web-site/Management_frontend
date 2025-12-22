@@ -11,6 +11,8 @@ import NoticeDetailPage from "../pages/common/NoticeDetailPage";
 import OwnerRoomCreatePage from "../pages/owner/OwnerRoomCreatePage"
 import OwnerHotelCreatePage from "../pages/owner/OwnerHotelCreatePage";
 import AdminHotelEditPage from "../pages/admin/AdminHotelEditPage";
+import InquiryListPage from "../pages/common/InquiryListPage";
+import InquiryDetailPage from "../pages/common/InquiryDetailPage";
 
 const ownerRoutes = [
     {
@@ -55,6 +57,8 @@ const ownerRoutes = [
             },
             { path: "notices", element: <NoticeListPage /> },
             { path: "notices/:noticeId", element: <NoticeDetailPage /> },
+            { path: "inquiries", element: <InquiryListPage /> },
+            { path: "inquiries/:inquiryId", element: <InquiryDetailPage /> },
             {
                 path: "me",
                 element: <AdminMyProfilePage />,

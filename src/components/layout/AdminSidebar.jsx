@@ -10,6 +10,7 @@ const AdminSidebar = () => {
     { path: "/admin/coupons", label: "쿠폰 관리", icon: "🎫" },
     { path: "/admin/settings", label: "설정", icon: "⚙️" },
     { path: "/admin/notices", label: "공지사항", icon: "📢" },
+    { path: "/admin/inquiries", label: "1:1 문의", icon: "💬" },
     { path: "/admin/me", label: "내 정보", icon: "👤" },
   ];
 
