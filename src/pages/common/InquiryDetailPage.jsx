@@ -1,91 +1,80 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosConfig';
+import '../../styles/inquiry.scss'; // 👈 SCSS 임포트!
 
 const InquiryDetailPage = () => {
     const { inquiryId } = useParams();
     const navigate = useNavigate();
     const [inquiry, setInquiry] = useState(null);
-    const [replyText, setReplyText] = useState(""); // 답변 입력값
+    const [replyText, setReplyText] = useState("");
     const userRole = localStorage.getItem('userRole');
 
     useEffect(() => {
+        const fetchDetail = async () => {
+            try {
+                const res = await axiosInstance.get(`/inquiries/${inquiryId}`);
+                setInquiry(res.data);
+                if (res.data.reply) setReplyText(res.data.reply);
+            } catch (err) { navigate('/owner/inquiries'); }
+        };
         fetchDetail();
-    }, []);
+    }, [inquiryId]);
 
-    const fetchDetail = async () => {
-        try {
-            const res = await axiosInstance.get(`/inquiries/${inquiryId}`);
-            setInquiry(res.data);
-            if (res.data.reply) setReplyText(res.data.reply); // 기존 답변 있으면 채워넣기
-        } catch (err) {
-            alert("접근 권한이 없거나 삭제된 글입니다.");
-            navigate('/inquiries');
-        }
-    };
-
-    // 관리자용 답변 등록 함수
-    const handleReplySubmit = async () => {
+    const handleReply = async () => {
         try {
             await axiosInstance.patch(`/inquiries/${inquiryId}/reply`, { reply: replyText });
-            alert("답변이 등록되었습니다.");
+            alert("답변 완료!");
             window.location.reload();
-        } catch (err) {
-            console.error(err);
-            alert("답변 등록 실패");
-        }
+        } catch (e) { alert("에러 발생"); }
     };
 
-    if (!inquiry) return <div>로딩 중...</div>;
+    if (!inquiry) return <div className="inquiry-container">로딩 중...</div>;
 
     return (
-        <div className="p-6 max-w-4xl mx-auto">
-            {/* 질문 영역 */}
-            <div className="bg-white shadow rounded-lg p-6 mb-6 border border-indigo-100">
-                <h1 className="text-xl font-bold mb-2 text-indigo-900">Q. {inquiry.title}</h1>
-                <div className="text-gray-500 text-sm mb-6 border-b pb-2">
-                    {inquiry.writer?.name} | {new Date(inquiry.createdAt).toLocaleDateString()}
-                </div>
-                <div className="min-h-[100px] whitespace-pre-wrap text-gray-800">{inquiry.content}</div>
+        <div className="inquiry-container">
+            <div className="page-header">
+                <h2>📋 문의 상세</h2>
             </div>
 
-            {/* 답변 영역 (답변이 있거나, 관리자일 때만 보임) */}
-            {(inquiry.reply || userRole === 'admin') && (
-                <div className="bg-gray-50 shadow rounded-lg p-6 border border-gray-200">
-                    <h2 className="text-lg font-bold mb-4 text-gray-700">A. 관리자 답변</h2>
+            <div className="inquiry-detail-card">
+                <div className="detail-header">
+                    <h1>Q. {inquiry.title}</h1>
+                    <div className="meta">
+                        <span>작성자: {inquiry.writer?.name}</span>
+                        <span>작성일: {new Date(inquiry.createdAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
 
+                <div className="detail-content">
+                    {inquiry.content}
+                </div>
+
+                {/* 답변 영역 */}
+                <div className="admin-reply-section">
+                    <h3>🅰️ 관리자 답변</h3>
                     {userRole === 'admin' ? (
-                        // 관리자는 수정 가능
                         <div>
                             <textarea
-                                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-                                rows="4"
                                 value={replyText}
                                 onChange={(e) => setReplyText(e.target.value)}
                                 placeholder="답변을 입력하세요..."
+                                rows="4"
                             />
-                            <div className="text-right mt-2">
-                                <button
-                                    onClick={handleReplySubmit}
-                                    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-                                >
-                                    답변 등록
-                                </button>
+                            <div style={{ textAlign: 'right' }}>
+                                <button onClick={handleReply} className="btn-reply">답변 등록</button>
                             </div>
                         </div>
                     ) : (
-                        // 일반 유저는 읽기만 가능
-                        <div className="whitespace-pre-wrap text-gray-800 bg-white p-4 rounded border">
-                            {inquiry.reply || "아직 답변이 등록되지 않았습니다."}
+                        <div className="reply-content">
+                            {inquiry.reply ? inquiry.reply : "아직 답변이 등록되지 않았습니다."}
                         </div>
                     )}
                 </div>
-            )}
 
-            <div className="text-center mt-6">
-                <button onClick={() => navigate('/inquiries')} className="text-gray-500 hover:text-gray-800 underline">
-                    목록으로 돌아가기
-                </button>
+                <div className="detail-footer">
+                    <button className="btn-back" onClick={() => navigate('/owner/inquiries')}>목록으로 돌아가기</button>
+                </div>
             </div>
         </div>
     );
