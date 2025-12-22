@@ -22,6 +22,8 @@ import NoticeListPage from '../pages/common/NoticeListPage';
 import NoticeDetailPage from '../pages/common/NoticeDetailPage';
 import NoticeWritePage from '../pages/common/NoticeWritePage';
 import NoticeEditPage from "../pages/common/NoticeEditPage";
+import InquiryListPage from "../pages/common/InquiryListPage";
+import InquiryDetailPage from "../pages/common/InquiryDetailPage";
 
 const adminRoutes = [
   {
@@ -56,6 +58,8 @@ const adminRoutes = [
       { path: "audit-logs", element: <AdminAuditLogPage /> },
       { path: "notices", element: <NoticeListPage /> },
       { path: "notices/new", element: <NoticeWritePage /> },
+      { path: "inquiries", element: <InquiryListPage /> },
+      { path: "inquiries/:inquiryId", element: <InquiryDetailPage /> },
       { path: "notices/:noticeId/edit", element: <NoticeEditPage /> },
       { path: "notices/:noticeId", element: <NoticeDetailPage /> },
       { path: "settings", element: <AdminSettingsPage /> },

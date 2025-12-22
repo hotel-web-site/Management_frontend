@@ -1,0 +1,296 @@
+/* src/styles/inquiry.scss */
+
+// 색상 변수 (니 프로젝트 테마색)
+$primary-color: #4f46e5; // 인디고 (보라파랑)
+$primary-hover: #4338ca;
+$bg-color: #f9fafb;
+$border-color: #e5e7eb;
+$text-dark: #111827;
+$text-gray: #6b7280;
+$white: #ffffff;
+
+// 공통 컨테이너
+.inquiry-container {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: $bg-color;
+    min-height: 100vh;
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: $text-dark;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-write {
+            background-color: $primary-color;
+            color: $white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: $primary-hover;
+                transform: translateY(-2px);
+            }
+        }
+    }
+}
+
+// 1. 리스트 페이지 테이블
+.inquiry-table-wrapper {
+    background: $white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid $border-color;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead {
+            background-color: #f3f4f6;
+
+            th {
+                padding: 1rem;
+                text-align: left;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: $text-gray;
+                border-bottom: 1px solid $border-color;
+            }
+        }
+
+        tbody {
+            tr {
+                border-bottom: 1px solid $border-color;
+                cursor: pointer;
+                transition: background-color 0.2s;
+
+                &:hover {
+                    background-color: #f0fdf4;
+                }
+
+                // 호버 시 살짝 초록빛
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                td {
+                    padding: 1rem;
+                    color: $text-dark;
+                    font-size: 0.95rem;
+
+                    .badge {
+                        padding: 4px 8px;
+                        border-radius: 20px;
+                        font-size: 0.75rem;
+                        font-weight: 700;
+
+                        &.done {
+                            background-color: #d1fae5;
+                            color: #065f46;
+                        }
+
+                        // 답변완료 (초록)
+                        &.wait {
+                            background-color: #f3f4f6;
+                            color: #4b5563;
+                        }
+
+                        // 대기중 (회색)
+                    }
+
+                    .secret-icon {
+                        margin-left: 6px;
+                        color: $text-gray;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .empty-message {
+        text-align: center;
+        padding: 3rem;
+        color: $text-gray;
+    }
+}
+
+// 2. 글쓰기 폼
+.inquiry-form-card {
+    background: $white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid $border-color;
+
+    .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: $text-dark;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid $border-color;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+
+            &:focus {
+                outline: none;
+                border-color: $primary-color;
+                box-shadow: 0 0 0 4px rgba($primary-color, 0.2);
+            }
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 200px;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+
+        button {
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+
+            &.btn-cancel {
+                background: #e5e7eb;
+                color: $text-dark;
+
+                &:hover {
+                    background: #d1d5db;
+                }
+            }
+
+            &.btn-submit {
+                background: $primary-color;
+                color: $white;
+
+                &:hover {
+                    background: $primary-hover;
+                }
+            }
+        }
+    }
+}
+
+// 3. 상세 페이지
+.inquiry-detail-card {
+    background: $white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid $border-color;
+
+    .detail-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid $border-color;
+        background: #f9fafb;
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: $text-dark;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta {
+            font-size: 0.9rem;
+            color: $text-gray;
+            display: flex;
+            gap: 1rem;
+        }
+    }
+
+    .detail-content {
+        padding: 2rem;
+        min-height: 150px;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        color: $text-dark;
+        white-space: pre-wrap;
+    }
+
+    .admin-reply-section {
+        background: #f0fdfa; // 관리자 답변 배경색 (살짝 민트)
+        padding: 1.5rem;
+        border-top: 1px solid #ccfbf1;
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f766e;
+            margin-bottom: 1rem;
+        }
+
+        .reply-content {
+            background: $white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccfbf1;
+            line-height: 1.6;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .btn-reply {
+            background: #0f766e;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+    }
+
+    .detail-footer {
+        padding: 1rem;
+        text-align: center;
+        border-top: 1px solid $border-color;
+
+        .btn-back {
+            color: $text-gray;
+            background: none;
+            border: none;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}

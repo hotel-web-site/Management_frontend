@@ -9,6 +9,7 @@ const OwnerSidebar = () => {
     { path: "/owner/bookings", label: "예약 관리", icon: "📅" },
     { path: "/owner/reviews", label: "리뷰 관리", icon: "⭐" },
     { path: "/owner/notices", label: "공지사항", icon: "📢" },
+    { path: "/owner/inquiries", label: "1:1 문의", icon: "💬" },
     { path: "/owner/me", label: "내 정보", icon: "👤" },
   ];
 
